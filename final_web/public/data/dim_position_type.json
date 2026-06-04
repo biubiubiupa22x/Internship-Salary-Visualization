@@ -1,0 +1,102 @@
+[
+  {
+    "position_type_id": 1,
+    "type_name": "后端",
+    "parent_type": "开发类"
+  },
+  {
+    "position_type_id": 2,
+    "type_name": "Java",
+    "parent_type": "开发类"
+  },
+  {
+    "position_type_id": 3,
+    "type_name": "前端",
+    "parent_type": "开发类"
+  },
+  {
+    "position_type_id": 4,
+    "type_name": "数据",
+    "parent_type": "数据类"
+  },
+  {
+    "position_type_id": 5,
+    "type_name": "算法",
+    "parent_type": "算法与AI"
+  },
+  {
+    "position_type_id": 6,
+    "type_name": "客户端",
+    "parent_type": "开发类"
+  },
+  {
+    "position_type_id": 7,
+    "type_name": "大模型",
+    "parent_type": "算法与AI"
+  },
+  {
+    "position_type_id": 8,
+    "type_name": "产品",
+    "parent_type": "产品类"
+  },
+  {
+    "position_type_id": 9,
+    "type_name": "游戏",
+    "parent_type": "开发类"
+  },
+  {
+    "position_type_id": 10,
+    "type_name": "人工智能",
+    "parent_type": "算法与AI"
+  },
+  {
+    "position_type_id": 11,
+    "type_name": "数仓",
+    "parent_type": "数据类"
+  },
+  {
+    "position_type_id": 12,
+    "type_name": "测试",
+    "parent_type": "测试类"
+  },
+  {
+    "position_type_id": 13,
+    "type_name": "机器学习",
+    "parent_type": "算法与AI"
+  },
+  {
+    "position_type_id": 14,
+    "type_name": "计算机视觉",
+    "parent_type": "算法与AI"
+  },
+  {
+    "position_type_id": 15,
+    "type_name": "UI",
+    "parent_type": "设计类"
+  },
+  {
+    "position_type_id": 16,
+    "type_name": "运维",
+    "parent_type": "开发类"
+  },
+  {
+    "position_type_id": 17,
+    "type_name": "Python",
+    "parent_type": "开发类"
+  },
+  {
+    "position_type_id": 18,
+    "type_name": "iOS",
+    "parent_type": "开发类"
+  },
+  {
+    "position_type_id": 19,
+    "type_name": "运营",
+    "parent_type": "运营类"
+  },
+  {
+    "position_type_id": 20,
+    "type_name": "嵌入式",
+    "parent_type": "开发类"
+  }
+]

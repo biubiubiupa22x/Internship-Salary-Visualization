@@ -1,0 +1,27 @@
+[
+  {
+    "education_id": 1,
+    "education_name": "本科",
+    "edu_score": 2.0
+  },
+  {
+    "education_id": 2,
+    "education_name": "硕士",
+    "edu_score": 3.0
+  },
+  {
+    "education_id": 3,
+    "education_name": "不限",
+    "edu_score": 0.0
+  },
+  {
+    "education_id": 4,
+    "education_name": "大专",
+    "edu_score": 1.0
+  },
+  {
+    "education_id": 5,
+    "education_name": "博士",
+    "edu_score": 4.0
+  }
+]

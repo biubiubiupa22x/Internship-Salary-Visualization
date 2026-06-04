@@ -1,0 +1,127 @@
+[
+  {
+    "keyword_id": 1,
+    "keyword": "Java开发",
+    "category": null
+  },
+  {
+    "keyword_id": 2,
+    "keyword": "后端开发",
+    "category": null
+  },
+  {
+    "keyword_id": 3,
+    "keyword": "客户端开发",
+    "category": null
+  },
+  {
+    "keyword_id": 4,
+    "keyword": "推荐算法",
+    "category": null
+  },
+  {
+    "keyword_id": 5,
+    "keyword": "大模型算法",
+    "category": null
+  },
+  {
+    "keyword_id": 6,
+    "keyword": "产品经理",
+    "category": null
+  },
+  {
+    "keyword_id": 7,
+    "keyword": "数据分析",
+    "category": null
+  },
+  {
+    "keyword_id": 8,
+    "keyword": "产品运营",
+    "category": null
+  },
+  {
+    "keyword_id": 9,
+    "keyword": "算法工程师",
+    "category": null
+  },
+  {
+    "keyword_id": 10,
+    "keyword": "前端开发",
+    "category": null
+  },
+  {
+    "keyword_id": 11,
+    "keyword": "人工智能",
+    "category": null
+  },
+  {
+    "keyword_id": 12,
+    "keyword": "游戏开发",
+    "category": null
+  },
+  {
+    "keyword_id": 13,
+    "keyword": "测试开发",
+    "category": null
+  },
+  {
+    "keyword_id": 14,
+    "keyword": "计算机视觉",
+    "category": null
+  },
+  {
+    "keyword_id": 15,
+    "keyword": "数据工程师",
+    "category": null
+  },
+  {
+    "keyword_id": 16,
+    "keyword": "数据运营",
+    "category": null
+  },
+  {
+    "keyword_id": 17,
+    "keyword": "UI设计师",
+    "category": null
+  },
+  {
+    "keyword_id": 18,
+    "keyword": "运维开发",
+    "category": null
+  },
+  {
+    "keyword_id": 19,
+    "keyword": "数据挖掘",
+    "category": null
+  },
+  {
+    "keyword_id": 20,
+    "keyword": "Python开发",
+    "category": null
+  },
+  {
+    "keyword_id": 21,
+    "keyword": "数据仓库",
+    "category": null
+  },
+  {
+    "keyword_id": 22,
+    "keyword": "C++开发",
+    "category": null
+  },
+  {
+    "keyword_id": 23,
+    "keyword": "iOS开发",
+    "category": null
+  },
+  {
+    "keyword_id": 24,
+    "keyword": "机器学习",
+    "category": null
+  },
+  {
+    "keyword_id": 25,
+    "keyword": "嵌入式开发",
+    "category": null
+  }
+]

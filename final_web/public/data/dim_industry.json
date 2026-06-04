@@ -1,0 +1,106 @@
+[
+  {
+    "industry_id": 1,
+    "industry_name": "互联网/游戏/软件"
+  },
+  {
+    "industry_id": 2,
+    "industry_name": "教育/培训"
+  },
+  {
+    "industry_id": 3,
+    "industry_name": "企业服务/咨询"
+  },
+  {
+    "industry_id": 4,
+    "industry_name": "汽车/机械/制造"
+  },
+  {
+    "industry_id": 5,
+    "industry_name": "电子/通信/硬件"
+  },
+  {
+    "industry_id": 6,
+    "industry_name": "不限"
+  },
+  {
+    "industry_id": 7,
+    "industry_name": "金融/经济/投资/财会"
+  },
+  {
+    "industry_id": 8,
+    "industry_name": "房产/家居/物业/建筑"
+  },
+  {
+    "industry_id": 9,
+    "industry_name": "医疗/健康/制药/生物"
+  },
+  {
+    "industry_id": 10,
+    "industry_name": "交通/贸易/物流"
+  },
+  {
+    "industry_id": 11,
+    "industry_name": "化工/能源/环保"
+  },
+  {
+    "industry_id": 12,
+    "industry_name": "广告/传媒/公关/展览"
+  },
+  {
+    "industry_id": 13,
+    "industry_name": "快消/百货/批发/零售"
+  },
+  {
+    "industry_id": 14,
+    "industry_name": "公共事业/NGO/政府"
+  },
+  {
+    "industry_id": 15,
+    "industry_name": "农林牧渔/其他"
+  },
+  {
+    "industry_id": 16,
+    "industry_name": "互联网/移动互联网/电子商务"
+  },
+  {
+    "industry_id": 17,
+    "industry_name": "制药/生物工程"
+  },
+  {
+    "industry_id": 18,
+    "industry_name": "教育/培训/学术/科研/院校"
+  },
+  {
+    "industry_id": 19,
+    "industry_name": "餐饮/酒店/旅游/娱乐"
+  },
+  {
+    "industry_id": 20,
+    "industry_name": "影视/媒体/艺术/文化/出版"
+  },
+  {
+    "industry_id": 21,
+    "industry_name": "汽车/摩托车"
+  },
+  {
+    "industry_id": 22,
+    "industry_name": "网络游戏"
+  },
+  {
+    "industry_id": 23,
+    "industry_name": "计算机软件"
+  },
+  {
+    "industry_id": 24,
+    "industry_name": "检测/认证"
+  },
+  {
+    "industry_id": 25,
+    "industry_name": "IT服务/系统集成"
+  },
+  {
+    "industry_id": 26,
+    "industry_name": "广告/公关/市场推广/会展"
+  }
+]

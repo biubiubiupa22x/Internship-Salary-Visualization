@@ -1,0 +1,86 @@
+[
+  {
+    "company_size_id": 1,
+    "size_name": "2000人以上",
+    "size_min": null,
+    "size_max": null,
+    "sort_order": null
+  },
+  {
+    "company_size_id": 2,
+    "size_name": "150-500人",
+    "size_min": null,
+    "size_max": null,
+    "sort_order": null
+  },
+  {
+    "company_size_id": 3,
+    "size_name": "500-2000人",
+    "size_min": null,
+    "size_max": null,
+    "sort_order": null
+  },
+  {
+    "company_size_id": 4,
+    "size_name": "50-150人",
+    "size_min": null,
+    "size_max": null,
+    "sort_order": null
+  },
+  {
+    "company_size_id": 5,
+    "size_name": "少于15人",
+    "size_min": null,
+    "size_max": null,
+    "sort_order": null
+  },
+  {
+    "company_size_id": 6,
+    "size_name": "15-50人",
+    "size_min": null,
+    "size_max": null,
+    "sort_order": null
+  },
+  {
+    "company_size_id": 7,
+    "size_name": "15人以下",
+    "size_min": null,
+    "size_max": null,
+    "sort_order": null
+  },
+  {
+    "company_size_id": 8,
+    "size_name": "50-100人",
+    "size_min": null,
+    "size_max": null,
+    "sort_order": null
+  },
+  {
+    "company_size_id": 9,
+    "size_name": "未知规模",
+    "size_min": null,
+    "size_max": null,
+    "sort_order": null
+  },
+  {
+    "company_size_id": 10,
+    "size_name": "50-200人",
+    "size_min": null,
+    "size_max": null,
+    "sort_order": null
+  },
+  {
+    "company_size_id": 11,
+    "size_name": "100-499人",
+    "size_min": null,
+    "size_max": null,
+    "sort_order": null
+  },
+  {
+    "company_size_id": 12,
+    "size_name": "500-1000人",
+    "size_min": null,
+    "size_max": null,
+    "sort_order": null
+  }
+]

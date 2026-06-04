@@ -1,0 +1,170 @@
+[
+  {
+    "city_id": 1,
+    "city_name": "北京",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 2,
+    "city_name": "上海",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 3,
+    "city_name": "广州",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 4,
+    "city_name": "深圳",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 5,
+    "city_name": "杭州",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 6,
+    "city_name": "成都",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 7,
+    "city_name": "南京",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 8,
+    "city_name": "全国",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 9,
+    "city_name": "长沙",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 10,
+    "city_name": "武汉",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 11,
+    "city_name": "青岛",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 12,
+    "city_name": "宁波",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 13,
+    "city_name": "重庆",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 14,
+    "city_name": "西安",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 15,
+    "city_name": "苏州",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 16,
+    "city_name": "无锡",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 17,
+    "city_name": "合肥",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 18,
+    "city_name": "厦门",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 19,
+    "city_name": "天津",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 20,
+    "city_name": "郑州",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  },
+  {
+    "city_id": 21,
+    "city_name": "佛山",
+    "province": null,
+    "region": null,
+    "longitude": null,
+    "latitude": null
+  }
+]

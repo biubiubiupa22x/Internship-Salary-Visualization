@@ -1,0 +1,38 @@
+[
+  {
+    "name": "dim_skill",
+    "seq": 21
+  },
+  {
+    "name": "dim_city",
+    "seq": 21
+  },
+  {
+    "name": "dim_search_keyword",
+    "seq": 25
+  },
+  {
+    "name": "dim_position_type",
+    "seq": 20
+  },
+  {
+    "name": "dim_education",
+    "seq": 5
+  },
+  {
+    "name": "dim_company_size",
+    "seq": 12
+  },
+  {
+    "name": "dim_industry",
+    "seq": 26
+  },
+  {
+    "name": "dim_salary_tier",
+    "seq": 4
+  },
+  {
+    "name": "fact_job",
+    "seq": 8149
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "salary_tier_id": 1,
+    "tier_name": "10-15k",
+    "min_salary": null,
+    "max_salary": null,
+    "sort_order": null
+  },
+  {
+    "salary_tier_id": 2,
+    "tier_name": "6-10k",
+    "min_salary": null,
+    "max_salary": null,
+    "sort_order": null
+  },
+  {
+    "salary_tier_id": 3,
+    "tier_name": "3-6k",
+    "min_salary": null,
+    "max_salary": null,
+    "sort_order": null
+  },
+  {
+    "salary_tier_id": 4,
+    "tier_name": "3k以下",
+    "min_salary": null,
+    "max_salary": null,
+    "sort_order": null
+  }
+]
