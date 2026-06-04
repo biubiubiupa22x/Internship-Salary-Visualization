@@ -156,9 +156,6 @@ importers:
         specifier: ^3.24.1
         version: 3.25.76
     devDependencies:
-      '@tailwindcss/oxide-win32-x64-msvc':
-        specifier: 4.2.0
-        version: 4.2.0
       '@tailwindcss/postcss':
         specifier: ^4.2.0
         version: 4.2.0
