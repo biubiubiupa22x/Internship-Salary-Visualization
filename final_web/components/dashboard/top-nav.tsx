@@ -8,13 +8,13 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { label: "首页", href: "/" },
-  { label: "城市", href: "/city" },
-  { label: "薪资", href: "/salary" },
-  { label: "学历", href: "/education" },
-  { label: "公司", href: "/company" },
-  { label: "岗位", href: "/job" },
-  { label: "技能", href: "/skill" },
-  { label: "洞察", href: "/conclusion" },
+  { label: "城市实习", href: "/city" },
+  { label: "实习薪资", href: "/salary" },
+  { label: "学历门槛", href: "/education" },
+  { label: "行业公司", href: "/company" },
+  { label: "实习岗位", href: "/job" },
+  { label: "技能画像", href: "/skill" },
+  { label: "综合洞察", href: "/conclusion" },
 ];
 
 export function TopNav() {
@@ -29,7 +29,7 @@ export function TopNav() {
               <Brain className="h-5 w-5 text-white" />
             </div>
             <span className="text-lg font-semibold tracking-tight">
-              AI Talent
+              智岗洞察
             </span>
           </Link>
 

@@ -14,38 +14,38 @@ import { Button } from "@/components/ui/button";
 const features = [
   {
     icon: MapPin,
-    title: "城市需求分布",
-    description: "探索各城市 AI 岗位分布情况，了解区域人才需求特征。",
+    title: "城市实习需求分布",
+    description: "探索各城市 AI 相关实习岗位分布情况，了解区域实习机会特征。",
     href: "/city",
   },
   {
     icon: DollarSign,
-    title: "薪资水平分析",
-    description: "分析不同岗位、城市和学历门槛下的薪资结构。",
+    title: "实习薪资水平分析",
+    description: "分析不同实习岗位类型、城市和学历门槛下的实习薪资结构。",
     href: "/salary",
   },
   {
     icon: GraduationCap,
-    title: "学历经验要求",
-    description: "了解市场对学历和实习经验的真实需求。",
+    title: "实习岗位学历门槛",
+    description: "了解 AI 相关实习岗位对学历和实习经验的真实要求。",
     href: "/education",
   },
   {
     icon: Building2,
-    title: "公司行业分布",
-    description: "查看招聘企业的行业分布与公司规模特征。",
+    title: "行业与公司规模",
+    description: "查看 AI 相关实习岗位的行业分布与公司规模特征。",
     href: "/company",
   },
   {
     icon: Briefcase,
-    title: "岗位类型解析",
-    description: "拆解 AI 相关岗位类型及其需求占比。",
-    href: "/position",
+    title: "实习岗位类型解析",
+    description: "拆解 AI 相关实习岗位类型及其需求占比。",
+    href: "/job",
   },
   {
     icon: Code2,
-    title: "技能画像",
-    description: "分析热门技能关键词与技术栈要求。",
+    title: "实习岗位技能画像",
+    description: "分析 AI 相关实习岗位中的热门技能关键词与技术栈要求。",
     href: "/skill",
   },
 ];
@@ -59,7 +59,7 @@ export function FeaturesGrid() {
             探索更多维度
           </h2>
           <p className="mt-3 text-muted-foreground">
-            从多个角度深入了解 AI 人才市场
+            从多个角度深入了解 AI 相关实习岗位市场
           </p>
         </div>
 

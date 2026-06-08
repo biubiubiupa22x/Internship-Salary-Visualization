@@ -13,9 +13,9 @@ export default function InsightsPage() {
       
       <main className="mx-auto max-w-7xl px-6 py-8">
         <PageHeader
-          title="综合洞察"
-          question="从数据中我们能得出哪些核心结论和建议？"
-          description="汇总各维度的分析结果，提炼关键发现，并给出针对性的建议。"
+          title="实习招聘综合洞察"
+          question="从 AI 相关实习岗位数据中可以观察到哪些核心结论？"
+          description="汇总各维度的分析结果，提炼实习招聘市场中的关键发现。"
         />
         
         {/* Key Metrics */}
@@ -41,9 +41,9 @@ export default function InsightsPage() {
           <h2 className="mb-4 text-lg font-semibold text-foreground">数据说明</h2>
           <div className="grid gap-4 text-sm text-muted-foreground md:grid-cols-2">
             <div>
-              <p className="mb-2"><strong className="text-foreground">数据来源：</strong>主流招聘平台公开数据</p>
+              <p className="mb-2"><strong className="text-foreground">数据来源：</strong>主流招聘平台公开实习岗位数据</p>
               <p className="mb-2"><strong className="text-foreground">数据时间：</strong>2024年1月 - 2024年12月</p>
-              <p><strong className="text-foreground">样本量：</strong>1,236 条有效招聘信息</p>
+              <p><strong className="text-foreground">样本量：</strong>清洗后的 AI 相关实习岗位样本</p>
             </div>
             <div>
               <p className="mb-2"><strong className="text-foreground">分析维度：</strong>城市、薪资、学历、经验、行业、岗位、技能</p>

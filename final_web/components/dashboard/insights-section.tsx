@@ -27,23 +27,23 @@ export function InsightsSection({
     {
       icon: MapPin,
       title: "头部城市集中",
-      description: `${topCity}以 ${topCityJobs.toLocaleString()} 个岗位位居第一，占全部样本的 ${topCityShare}%；前三城市合计占比 ${topCityGroupShare}%。`,
+      description: `${topCity}以 ${topCityJobs.toLocaleString()} 个实习岗位位居第一，占全部样本的 ${topCityShare}%；前三城市合计占比 ${topCityGroupShare}%。`,
     },
     {
       icon: TrendingUp,
-      title: "薪资档位集中",
-      description: `${topSalaryTier} 是岗位最多的薪资档位，占全部岗位的 ${topSalaryTierShare}%。`,
+      title: "实习薪资档位集中",
+      description: `${topSalaryTier} 是实习岗位最多的薪资档位，占全部实习岗位的 ${topSalaryTierShare}%。`,
     },
     {
       icon: Code2,
       title: "高频技能明确",
-      description: `${topSkill} 出现 ${topSkillCount.toLocaleString()} 次，是当前样本中最突出的技能/岗位关键词。`,
+      description: `${topSkill} 出现 ${topSkillCount.toLocaleString()} 次，是当前实习岗位样本中最突出的技能/岗位关键词。`,
     },
     {
       icon: Lightbulb,
       title: "数据来自数据库",
       description:
-        "首页统计卡、城市排名、薪资档位和技能频次均读取自 SQLite 数据库聚合视图。",
+        "首页统计卡、城市排名、实习薪资档位和技能频次均读取自 JSON 数据备份聚合结果。",
     },
   ];
 

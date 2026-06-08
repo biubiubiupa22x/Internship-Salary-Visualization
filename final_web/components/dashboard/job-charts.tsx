@@ -39,7 +39,7 @@ export function JobDemandChart({ data }: { data: JobDemandDatum[] }) {
         <BarChart data={data} layout="vertical" margin={{ left: 20, right: 54 }}>
           <XAxis type="number" tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} />
           <YAxis type="category" dataKey="type" width={110} tick={{ fontSize: 12, fill: "var(--foreground)" }} axisLine={false} tickLine={false} />
-          <Tooltip formatter={(value: number) => [`${value} 个岗位`, "需求量"]} contentStyle={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", borderRadius: "8px", fontSize: "12px" }} />
+          <Tooltip formatter={(value: number) => [`${value} 个实习岗位`, "实习需求量"]} contentStyle={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", borderRadius: "8px", fontSize: "12px" }} />
           <Bar dataKey="count" radius={[0, 6, 6, 0]}>
             <LabelList dataKey="count" position="right" className="fill-foreground" fontSize={12} />
             {data.map((_, index) => <Cell key={index} fill={COLORS[index % COLORS.length]} />)}
@@ -75,7 +75,7 @@ export function JobSalaryChart({ data }: { data: JobSalaryDatum[] }) {
 
           return (
             <g key={item.type} className="cursor-pointer">
-              <title>{`${item.type}：平均薪资 ${item.salary}k`}</title>
+              <title>{`${item.type}：平均实习薪资 ${item.salary}k`}</title>
               <text x={margin.left - 12} y={y + 4} textAnchor="end" className="fill-foreground text-[12px]">{item.type}</text>
               <line x1={margin.left} x2={x(item.salary)} y1={y} y2={y} stroke={color} strokeWidth={3} strokeLinecap="round" strokeOpacity={0.65} />
               <circle cx={x(item.salary)} cy={y} r={7} fill={color} stroke="var(--card)" strokeWidth={2} />
@@ -95,8 +95,8 @@ function BubbleTooltip({ active, payload }: { active?: boolean; payload?: Array<
   return (
     <div className="rounded-lg border border-border bg-card px-3 py-2 text-xs shadow-sm">
       <p className="font-medium text-foreground">{item.name}</p>
-      <p className="mt-1 text-muted-foreground">岗位数量：{item.count} 个</p>
-      <p className="text-muted-foreground">平均薪资：{item.salary}k</p>
+      <p className="mt-1 text-muted-foreground">实习岗位数量：{item.count} 个</p>
+      <p className="text-muted-foreground">平均实习薪资：{item.salary}k</p>
       <p className="text-muted-foreground">学历要求：{item.educationName}</p>
       <p className="text-muted-foreground">门槛评分：{item.educationScore}</p>
     </div>
@@ -121,11 +121,11 @@ export function JobBubbleChart({ data }: { data: JobBubbleDatum[] }) {
       <div className="relative h-[380px]">
       <ResponsiveContainer width="100%" height="100%">
         <ScatterChart margin={{ top: 28, right: 54, bottom: 28, left: 20 }}>
-          <XAxis type="number" dataKey="plotCount" name="岗位数量" domain={[0, Math.ceil(maxCount * 1.08)]} tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} axisLine={{ stroke: "var(--border)" }} tickLine={false} label={{ value: "岗位数量", position: "bottom", offset: 0, fontSize: 12, fill: "var(--muted-foreground)" }} />
-          <YAxis type="number" dataKey="plotSalary" name="平均薪资" domain={[0, maxSalary]} tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} axisLine={{ stroke: "var(--border)" }} tickLine={false} tickFormatter={(v) => `${v}k`} label={{ value: "平均薪资(k)", angle: -90, position: "insideLeft", fontSize: 12, fill: "var(--muted-foreground)" }} />
+          <XAxis type="number" dataKey="plotCount" name="实习岗位数量" domain={[0, Math.ceil(maxCount * 1.08)]} tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} axisLine={{ stroke: "var(--border)" }} tickLine={false} label={{ value: "实习岗位数量", position: "bottom", offset: 0, fontSize: 12, fill: "var(--muted-foreground)" }} />
+          <YAxis type="number" dataKey="plotSalary" name="平均实习薪资" domain={[0, maxSalary]} tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} axisLine={{ stroke: "var(--border)" }} tickLine={false} tickFormatter={(v) => `${v}k`} label={{ value: "平均实习薪资(k)", angle: -90, position: "insideLeft", fontSize: 12, fill: "var(--muted-foreground)" }} />
           <ZAxis type="number" dataKey="educationSize" range={[100, 2800]} name="学历门槛" />
           <ReferenceLine x={avgCount} stroke="var(--muted-foreground)" strokeDasharray="4 4" label={{ value: "平均需求", position: "top", fill: "var(--muted-foreground)", fontSize: 11 }} />
-          <ReferenceLine y={avgSalary} stroke="var(--chart-5)" strokeDasharray="4 4" label={{ value: `平均薪资 ${avgSalary}k`, position: "right", fill: "var(--foreground)", fontSize: 11 }} />
+          <ReferenceLine y={avgSalary} stroke="var(--chart-5)" strokeDasharray="4 4" label={{ value: `平均实习薪资 ${avgSalary}k`, position: "right", fill: "var(--foreground)", fontSize: 11 }} />
           <Tooltip content={<BubbleTooltip />} />
           <Legend verticalAlign="top" wrapperStyle={{ fontSize: 11 }} />
           <Scatter name="气泡大小 = 学历门槛" data={displayData} fill="#8b5cf6" fillOpacity={0.48} stroke="#312e81" strokeWidth={1.4}>
@@ -161,7 +161,7 @@ export function JobBubbleChart({ data }: { data: JobBubbleDatum[] }) {
             {item.label}
           </span>
         ))}
-        <span>参考线区分需求和薪资是否高于均值</span>
+        <span>参考线区分实习需求和薪资是否高于均值</span>
       </div>
     </div>
   );
@@ -187,7 +187,7 @@ export function CityJobStackedChart({ data, stackTypes }: { data: CityJobStructu
           <YAxis domain={[0, 100]} tickFormatter={(value) => `${value}%`} tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} label={{ value: "结构占比", angle: -90, position: "insideLeft", fontSize: 12, fill: "var(--muted-foreground)" }} />
           <Tooltip formatter={(value: number, name: string, props) => [`${value}%`, name]} labelFormatter={(label, payload) => {
             const total = payload?.[0]?.payload?.total;
-            return total ? `${label}：共 ${total} 个岗位` : label;
+            return total ? `${label}：共 ${total} 个实习岗位` : label;
           }} contentStyle={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", borderRadius: "8px", fontSize: "12px" }} />
           <Legend verticalAlign="top" wrapperStyle={{ fontSize: 11, paddingBottom: 10 }} />
           {stackTypes.map((type, index) => (

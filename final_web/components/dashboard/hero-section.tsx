@@ -22,16 +22,15 @@ export function HeroSection({ totalJobs }: { totalJobs: number }) {
           </div>
 
           <h1 className="max-w-4xl text-balance text-5xl font-bold tracking-tight md:text-6xl lg:text-7xl">
-            <span className="text-foreground">洞察 AI 人才</span>
+            <span className="text-foreground">智岗洞察：</span>
             <br />
             <span className="bg-gradient-to-r from-purple-600 via-violet-600 to-blue-600 bg-clip-text text-transparent">
-              市场趋势
+              AI相关实习岗位数据可视化分析
             </span>
           </h1>
 
           <p className="mt-6 max-w-2xl text-pretty text-lg text-muted-foreground md:text-xl">
-            从城市分布、薪资结构、学历经验、岗位类型与技能关键词出发，
-            全方位刻画 AI 人才市场需求特征。
+            基于真实招聘数据，从城市需求、实习薪资、学历门槛、岗位类型与技能画像等维度，观察人工智能相关实习岗位市场特征。
           </p>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">

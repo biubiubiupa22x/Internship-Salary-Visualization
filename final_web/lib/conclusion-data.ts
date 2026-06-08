@@ -396,9 +396,9 @@ export function getConclusionData(): ConclusionData {
   const radarCities = radarSource.map((row) => row.cityName)
 
   const radarDimensions = [
-    { dimension: "岗位数量", key: "jobCount" },
-    { dimension: "平均薪资", key: "avgSalary" },
-    { dimension: "岗位丰富度", key: "jobDiversity" },
+    { dimension: "实习岗位数量", key: "jobCount" },
+    { dimension: "平均实习薪资", key: "avgSalary" },
+    { dimension: "实习岗位丰富度", key: "jobDiversity" },
     { dimension: "学历门槛", key: "avgEdu" },
     { dimension: "技能数量", key: "avgSkillCount" },
   ] as const
@@ -469,18 +469,18 @@ export function getConclusionData(): ConclusionData {
   const topSkillCount = topSkill?.[1] ?? 0
 
   const insights = [
-    `${topCityName}岗位数量最高，共 ${topCityJobs} 个，占全部样本的 ${topCityShare}%，城市集中度明显。`,
-    `薪资档位以${topSalaryTierName}为主，共 ${topSalaryTierJobs} 个岗位，占比 ${topSalaryTierShare}%，样本薪资中枢集中在该区间。`,
-    `${topPositionName}是需求量最高的岗位类型，共 ${topPositionJobs} 个岗位，占比 ${topPositionShare}%，体现当前招聘需求的主方向。`,
-    `技能关键词中“${topSkillName}”出现 ${topSkillCount} 次，是当前岗位描述中最突出的能力标签。`,
+    `${topCityName}实习岗位数量最高，共 ${topCityJobs} 个，占全部样本的 ${topCityShare}%，城市集中度明显。`,
+    `实习薪资档位以${topSalaryTierName}为主，共 ${topSalaryTierJobs} 个实习岗位，占比 ${topSalaryTierShare}%，样本薪资中枢集中在该区间。`,
+    `${topPositionName}是需求量最高的实习岗位类型，共 ${topPositionJobs} 个实习岗位，占比 ${topPositionShare}%，体现当前实习招聘需求的主方向。`,
+    `技能关键词中“${topSkillName}”出现 ${topSkillCount} 次，是当前实习岗位描述中最突出的能力标签。`,
   ]
 
   const finalConclusion: FinalConclusion = {
-    text: `基于 ${totalJobs} 条真实岗位数据，当前招聘市场呈现出城市需求高度集中、薪资主要落在${topSalaryTierName}、岗位类型以${topPositionName}为核心的结构。综合城市、薪资、学历、技能和竞争力变量来看，求职策略应优先结合目标城市岗位密度、岗位类型热度和技能关键词进行规划。`,
+    text: `基于 ${totalJobs} 条真实实习岗位数据，当前 AI 相关实习招聘市场呈现出城市需求高度集中、实习薪资主要落在${topSalaryTierName}、岗位类型以${topPositionName}为核心的结构。综合城市、实习薪资、学历、技能和竞争力变量来看，实习机会选择应优先结合目标城市岗位密度、岗位类型热度和技能关键词进行规划。`,
     metrics: [
-      { label: "岗位样本", value: `${totalJobs}`, note: "来自清洗后数据库" },
+      { label: "实习岗位样本", value: `${totalJobs}`, note: "来自清洗后数据库" },
       { label: "覆盖城市", value: `${totalCities}`, note: "按城市维度聚合" },
-      { label: "平均薪资", value: `${avgSalary}k`, note: "基于有效薪资字段" },
+      { label: "平均实习薪资", value: `${avgSalary}k`, note: "基于有效薪资字段" },
       { label: "技能关键词", value: `${skillsDim.length}`, note: "来自技能维表" },
     ],
   }

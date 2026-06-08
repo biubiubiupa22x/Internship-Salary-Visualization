@@ -1,6 +1,11 @@
 "use client";
 
 import { Bar, Cell, ComposedChart, LabelList, Legend, Line, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import type { SalaryAnalysisData, SalaryBoxDatum, SalaryHistogramDatum, SalaryTierDatum } from "@/lib/salary-data";
+
+type SalaryChartProps = {
+  data?: SalaryAnalysisData;
+};
 
 const salaryHistogram = [
   { range: "5-8k", count: 45 },
@@ -56,22 +61,56 @@ const positionBoxData = [
 
 const COLORS = ["#93c5fd", "#60a5fa", "#38bdf8", "#22d3ee", "#fde68a", "#facc15"];
 
-export function SalaryHistogramChart() {
+const fallbackData: SalaryAnalysisData = {
+  histogram: salaryHistogram,
+  tiers: salaryTiers,
+  cityBoxes: cityBoxData,
+  positionBoxes: positionBoxData,
+};
+
+function makeSalaryDistribution(histogram: SalaryHistogramDatum[]) {
+  const salaryTotal = histogram.reduce((sum, item) => sum + item.count, 0);
+
+  return histogram.map((item, index, items) => {
+    const previous = items[index - 1]?.count ?? item.count;
+    const next = items[index + 1]?.count ?? item.count;
+    const smoothedCount = previous * 0.25 + item.count * 0.5 + next * 0.25;
+
+    return {
+      ...item,
+      density: salaryTotal ? Number(((smoothedCount / salaryTotal) * 100).toFixed(1)) : 0,
+    };
+  });
+}
+
+function makeSalaryTierData(tiers: SalaryTierDatum[]) {
+  const salaryTierTotal = tiers.reduce((sum, tier) => sum + tier.value, 0);
+
+  return tiers.map((tier) => ({
+    ...tier,
+    percentage: salaryTierTotal ? Number(((tier.value / salaryTierTotal) * 100).toFixed(1)) : 0,
+  }));
+}
+
+export function SalaryHistogramChart({ data = fallbackData }: SalaryChartProps = {}) {
+  const salaryDistribution = makeSalaryDistribution(data.histogram);
+  const maxDensity = Math.max(...salaryDistribution.map((item) => item.density), 10);
+
   return (
     <div className="h-[300px]">
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart data={salaryDistribution} margin={{ left: -10, right: 10, bottom: 10, top: 20 }}>
           <XAxis dataKey="range" tick={{ fontSize: 11, fill: "var(--foreground)" }} axisLine={false} tickLine={false} angle={-35} textAnchor="end" height={50} />
           <YAxis yAxisId="left" tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} />
-          <YAxis yAxisId="right" orientation="right" domain={[0, 22]} tickFormatter={(value) => `${value}%`} tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} />
+          <YAxis yAxisId="right" orientation="right" domain={[0, Math.ceil(maxDensity * 1.25)]} tickFormatter={(value) => `${value}%`} tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} />
           <Tooltip
             formatter={(value: number, name: string) =>
-              name === "密度曲线" ? [`${value}%`, name] : [`${value} 个岗位`, name]
+              name === "密度曲线" ? [`${value}%`, name] : [`${value} 个实习岗位`, name]
             }
             contentStyle={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", borderRadius: "8px" }}
           />
           <Legend wrapperStyle={{ fontSize: 12 }} />
-          <Bar yAxisId="left" dataKey="count" name="岗位数量" radius={[4, 4, 0, 0]}>
+          <Bar yAxisId="left" dataKey="count" name="实习岗位数量" radius={[4, 4, 0, 0]}>
             <LabelList dataKey="count" position="top" className="fill-foreground" fontSize={11} />
             {salaryDistribution.map((entry, index) => <Cell key={index} fill={entry.count >= 200 ? "var(--chart-1)" : entry.count >= 150 ? "var(--chart-2)" : "var(--chart-3)"} />)}
           </Bar>
@@ -82,19 +121,11 @@ export function SalaryHistogramChart() {
   );
 }
 
-export function SalaryTiersPieChart() {
-  const salaryTierTotal = salaryTiers.reduce((sum, tier) => sum + tier.value, 0);
-  const salaryTierData = salaryTiers.map((tier) => ({
-    ...tier,
-    percentage: Number(((tier.value / salaryTierTotal) * 100).toFixed(1)),
-  }));
-  const highSalaryValue = salaryTierData
-    .filter((tier) => tier.name === "25-30k" || tier.name === "30k以上")
-    .reduce((sum, tier) => sum + tier.value, 0);
-  const highSalaryPercentage = Number(((highSalaryValue / salaryTierTotal) * 100).toFixed(1));
+export function SalaryTiersPieChart({ data = fallbackData }: SalaryChartProps = {}) {
+  const salaryTierData = makeSalaryTierData(data.tiers);
 
   return (
-    <div className="grid min-h-[300px] gap-4 md:grid-cols-[1fr_150px]">
+    <div className="min-h-[300px]">
       <div className="h-[300px] min-w-0">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -102,24 +133,15 @@ export function SalaryTiersPieChart() {
               {salaryTierData.map((_, index) => <Cell key={index} fill={COLORS[index % COLORS.length]} />)}
             </Pie>
             <Legend verticalAlign="bottom" height={42} iconType="circle" wrapperStyle={{ fontSize: 12 }} />
-            <Tooltip formatter={(value: number, _name, props) => [`${value} 个岗位，占比 ${props.payload.percentage}%`, props.payload.name]} contentStyle={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", borderRadius: "8px" }} />
+            <Tooltip formatter={(value: number, _name, props) => [`${value} 个实习岗位，占比 ${props.payload.percentage}%`, props.payload.name]} contentStyle={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", borderRadius: "8px" }} />
           </PieChart>
         </ResponsiveContainer>
-      </div>
-      <div className="flex items-center">
-        <div className="w-full rounded-lg border border-border bg-muted/30 p-4">
-          <p className="text-xs text-muted-foreground">高薪占比</p>
-          <p className="mt-2 text-3xl font-semibold text-foreground">{highSalaryPercentage}%</p>
-          <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-            25k 以上岗位共 {highSalaryValue} 个
-          </p>
-        </div>
       </div>
     </div>
   );
 }
 
-function BoxPlot({ data, labelKey, color, domainMax }: { data: Array<Record<string, string | number>>; labelKey: string; color: string; domainMax: number }) {
+function BoxPlot({ data, labelKey, color, domainMax }: { data: SalaryBoxDatum[]; labelKey: "city" | "position"; color: string; domainMax: number }) {
   const width = 720;
   const height = 320;
   const margin = { top: 18, right: 28, bottom: labelKey === "position" ? 70 : 48, left: 48 };
@@ -146,7 +168,7 @@ function BoxPlot({ data, labelKey, color, domainMax }: { data: Array<Record<stri
         <line x1={margin.left} x2={margin.left} y1={margin.top} y2={height - margin.bottom} stroke="var(--border)" />
         <line x1={margin.left} x2={width - margin.right} y1={height - margin.bottom} y2={height - margin.bottom} stroke="var(--border)" />
         {data.map((entry, index) => {
-          const label = entry[labelKey] as string;
+          const label = (entry[labelKey] ?? "") as string;
           const min = entry.min as number;
           const q1 = entry.q1 as number;
           const median = entry.median as number;
@@ -193,10 +215,15 @@ function BoxPlot({ data, labelKey, color, domainMax }: { data: Array<Record<stri
   );
 }
 
-export function CityBoxPlotChart() {
-  return <BoxPlot data={cityBoxData} labelKey="city" color="var(--chart-1)" domainMax={50} />;
+function boxDomain(data: SalaryBoxDatum[], fallback: number) {
+  const max = Math.max(...data.map((item) => item.max), fallback);
+  return Math.ceil((max * 1.12) / 5) * 5;
 }
 
-export function PositionBoxPlotChart() {
-  return <BoxPlot data={positionBoxData} labelKey="position" color="var(--chart-2)" domainMax={75} />;
+export function CityBoxPlotChart({ data = fallbackData }: SalaryChartProps = {}) {
+  return <BoxPlot data={data.cityBoxes} labelKey="city" color="var(--chart-1)" domainMax={boxDomain(data.cityBoxes, 10)} />;
+}
+
+export function PositionBoxPlotChart({ data = fallbackData }: SalaryChartProps = {}) {
+  return <BoxPlot data={data.positionBoxes} labelKey="position" color="var(--chart-2)" domainMax={boxDomain(data.positionBoxes, 10)} />;
 }

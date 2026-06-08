@@ -61,7 +61,7 @@ export function PositionSalaryChart() {
         <BarChart data={positionSalaryData} layout="vertical" margin={{ left: 10, right: 58 }}>
           <XAxis type="number" domain={[0, 25]} tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
           <YAxis type="category" dataKey="type" width={85} tick={{ fontSize: 11, fill: "var(--foreground)" }} axisLine={false} tickLine={false} />
-          <Tooltip formatter={(value: number) => [`${value}k`, "平均薪资"]} contentStyle={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", borderRadius: "8px" }} />
+          <Tooltip formatter={(value: number) => [`${value}k`, "平均实习薪资"]} contentStyle={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", borderRadius: "8px" }} />
           <Bar dataKey="salary" radius={[0, 6, 6, 0]}>
             <LabelList dataKey="salary" position="right" formatter={(value: number) => `${value}k`} className="fill-foreground" fontSize={12} />
             {positionSalaryData.map((entry, index) => <Cell key={index} fill={entry.salary >= 20 ? "var(--chart-1)" : "var(--chart-3)"} />)}

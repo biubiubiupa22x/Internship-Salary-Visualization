@@ -19,8 +19,8 @@ export default function ConclusionPage() {
       <TopNav />
       <main className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <PageHeader
-          title="综合洞察"
-          question="综合城市、薪资、岗位、学历和技能因素，AI 招聘市场呈现哪些结构性特征？"
+          title="实习招聘综合洞察"
+          question="综合城市、实习薪资、岗位类型、学历和技能因素，AI相关实习岗位市场呈现哪些结构性特征？"
           badge="数据驱动决策"
         />
         <div className="mt-8 grid gap-6 lg:grid-cols-2">

@@ -26,10 +26,10 @@ const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
       <div className="rounded-lg border border-border bg-card px-4 py-3 shadow-xl">
         <p className="font-semibold text-foreground">{data.city}</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          岗位数量：<span className="font-medium text-accent">{data.jobs}</span>
+          实习岗位数量：<span className="font-medium text-accent">{data.jobs}</span>
         </p>
         <p className="text-sm text-muted-foreground">
-          平均薪资：<span className="font-medium text-chart-3">{data.salary}k</span>
+          平均实习薪资：<span className="font-medium text-chart-3">{data.salary}k</span>
         </p>
       </div>
     );

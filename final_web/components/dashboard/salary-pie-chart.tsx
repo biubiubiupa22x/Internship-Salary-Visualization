@@ -26,7 +26,7 @@ const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
       <div className="rounded-lg border border-border bg-card px-4 py-3 shadow-xl">
         <p className="font-semibold text-foreground">{data.range}</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          岗位数量：<span className="font-medium text-accent">{data.value}</span>
+          实习岗位数量：<span className="font-medium text-accent">{data.value}</span>
         </p>
         <p className="text-sm text-muted-foreground">
           占比：

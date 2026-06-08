@@ -14,6 +14,11 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import type { CityAnalysisDatum } from "@/lib/city-data";
+
+type CityChartProps = {
+  data?: CityAnalysisDatum[];
+};
 
 const cityData = [
   { city: "上海", jobs: 2584, salary: 4.6 },
@@ -67,14 +72,16 @@ const interpolateColor = (start: string, end: string, ratio: number) => {
   return `#${mix(sr, er)}${mix(sg, eg)}${mix(sb, eb)}`;
 };
 
-export function CityRankChart() {
+export function CityRankChart({ data = cityData }: CityChartProps = {}) {
+  const cityRankData = data.slice(0, 10);
+
   return (
     <div className="h-[280px]">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={cityRankData} layout="vertical" margin={{ left: 0, right: 44 }}>
           <XAxis type="number" hide />
           <YAxis type="category" dataKey="city" width={50} tick={{ fontSize: 12, fill: "var(--foreground)" }} axisLine={false} tickLine={false} />
-          <Tooltip formatter={(value: number) => [`${value} 个岗位`, "岗位数量"]} contentStyle={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", borderRadius: "8px" }} />
+          <Tooltip formatter={(value: number) => [`${value} 个实习岗位`, "实习岗位数量"]} contentStyle={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", borderRadius: "8px" }} />
           <Bar dataKey="jobs" radius={[0, 6, 6, 0]}>
             <LabelList dataKey="jobs" position="right" className="fill-foreground" fontSize={12} />
             {cityRankData.map((_, index) => (
@@ -87,7 +94,8 @@ export function CityRankChart() {
   );
 }
 
-export function CitySalaryCompareChart() {
+export function CitySalaryCompareChart({ data = cityData }: CityChartProps = {}) {
+  const citySalaryData = data.slice(0, 10);
   const maxSalary = citySalaryData.reduce(
     (max, item) => (item.salary > max.salary ? item : max),
     citySalaryData[0]
@@ -102,7 +110,7 @@ export function CitySalaryCompareChart() {
           <YAxis yAxisId="right" orientation="right" domain={[2.5, 5]} tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} />
           <Tooltip contentStyle={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", borderRadius: "8px" }} />
           <Legend wrapperStyle={{ fontSize: 12 }} />
-          <Bar yAxisId="left" dataKey="jobs" name="岗位数量" radius={[4, 4, 0, 0]}>
+          <Bar yAxisId="left" dataKey="jobs" name="实习岗位数量" radius={[4, 4, 0, 0]}>
             {citySalaryData.map((_, index) => (
               <Cell
                 key={`city-salary-bar-${index}`}
@@ -110,7 +118,7 @@ export function CitySalaryCompareChart() {
               />
             ))}
           </Bar>
-          <Line yAxisId="right" type="monotone" dataKey="salary" name="平均薪资(k)" stroke="#ec4899" strokeWidth={2.5} dot={{ fill: "#f472b6", r: 4 }} />
+          <Line yAxisId="right" type="monotone" dataKey="salary" name="平均实习薪资(k)" stroke="#ec4899" strokeWidth={2.5} dot={{ fill: "#f472b6", r: 4 }} />
           <ReferenceDot yAxisId="right" x={maxSalary.city} y={maxSalary.salary} r={6} fill="#db2777" stroke="white" label={{ value: `最高 ${maxSalary.salary}k`, position: "top", fill: "var(--foreground)", fontSize: 12 }} />
         </ComposedChart>
       </ResponsiveContainer>
@@ -118,17 +126,24 @@ export function CitySalaryCompareChart() {
   );
 }
 
-export function CityMapPlaceholder() {
-  const cities = [
-    { name: "北京", x: 70, y: 25, size: 50 },
-    { name: "上海", x: 80, y: 50, size: 45 },
-    { name: "深圳", x: 75, y: 80, size: 40 },
-    { name: "杭州", x: 82, y: 55, size: 30 },
-    { name: "广州", x: 70, y: 78, size: 25 },
-    { name: "成都", x: 40, y: 55, size: 20 },
-    { name: "武汉", x: 60, y: 52, size: 18 },
-    { name: "西安", x: 45, y: 38, size: 15 },
+export function CityMapPlaceholder({ data = cityData }: CityChartProps = {}) {
+  const coordinates = [
+    { x: 70, y: 25 },
+    { x: 80, y: 50 },
+    { x: 75, y: 80 },
+    { x: 82, y: 55 },
+    { x: 70, y: 78 },
+    { x: 40, y: 55 },
+    { x: 60, y: 52 },
+    { x: 45, y: 38 },
   ];
+  const maxJobs = Math.max(...data.slice(0, 8).map((city) => city.jobs), 1);
+  const cities = data.slice(0, 8).map((city, index) => ({
+    name: city.city,
+    x: coordinates[index]?.x ?? 50,
+    y: coordinates[index]?.y ?? 50,
+    size: 16 + (city.jobs / maxJobs) * 34,
+  }));
   const minSize = Math.min(...cities.map((city) => city.size));
   const maxSize = Math.max(...cities.map((city) => city.size));
 
@@ -143,7 +158,7 @@ export function CityMapPlaceholder() {
           key={city.name}
           className="absolute flex items-center justify-center"
           style={{ left: `${city.x}%`, top: `${city.y}%`, transform: "translate(-50%, -50%)" }}
-          title={`${city.name}：气泡越大代表岗位越多`}
+          title={`${city.name}：气泡越大代表实习岗位越多`}
         >
           <div
             className="rounded-full opacity-80 shadow-sm transition-transform hover:scale-110"
@@ -164,13 +179,23 @@ export function CityMapPlaceholder() {
       ))}
 
       <div className="absolute bottom-3 left-3 rounded-md bg-white/80 px-2 py-1 text-xs text-muted-foreground">
-        气泡大小代表岗位数量
+        气泡大小代表实习岗位数量
       </div>
     </div>
   );
 }
 
-export function ParetoChart() {
+export function ParetoChart({ data = cityData }: CityChartProps = {}) {
+  const cityJobsTotal = data.reduce((sum, item) => sum + item.jobs, 0);
+  let cumulativeJobs = 0;
+  const paretoData = data.map((item) => {
+    cumulativeJobs += item.jobs;
+    return {
+      city: item.city,
+      jobs: item.jobs,
+      cumulative: Number(((cumulativeJobs / cityJobsTotal) * 100).toFixed(1)),
+    };
+  });
   const keyPoint = paretoData.find((item) => item.cumulative >= 80) ?? paretoData[0];
 
   return (
@@ -182,7 +207,7 @@ export function ParetoChart() {
           <YAxis yAxisId="right" orientation="right" domain={[0, 100]} tickFormatter={(v) => `${v}%`} tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} />
           <Tooltip contentStyle={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", borderRadius: "8px" }} />
           <Legend wrapperStyle={{ fontSize: 12 }} />
-          <Bar yAxisId="left" dataKey="jobs" name="岗位数量" radius={[4, 4, 0, 0]}>
+          <Bar yAxisId="left" dataKey="jobs" name="实习岗位数量" radius={[4, 4, 0, 0]}>
             {paretoData.map((_, index) => (
               <Cell
                 key={`pareto-bar-${index}`}

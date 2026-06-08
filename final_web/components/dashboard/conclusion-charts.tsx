@@ -141,9 +141,9 @@ function Heatmap({
       <p className="mt-3 text-xs text-muted-foreground">
         {showPercentageLabels
           ? colorScheme === "blueYellow"
-            ? "蓝色表示该城市内对应岗位类型占比更高，黄色表示占比较低；悬停可查看岗位数量和占比。"
-            : "红色表示该城市内对应薪资档位占比更高，黄色表示占比较低；悬停可查看岗位数量和占比。"
-          : "颜色越深表示岗位数量越多；完整数值可通过鼠标悬停查看。"}
+            ? "蓝色表示该城市内对应实习岗位类型占比更高，黄色表示占比较低；悬停可查看实习岗位数量和占比。"
+            : "红色表示该城市内对应实习薪资档位占比更高，黄色表示占比较低；悬停可查看实习岗位数量和占比。"
+          : "颜色越深表示实习岗位数量越多；完整数值可通过鼠标悬停查看。"}
       </p>
     </div>
   );
@@ -159,9 +159,9 @@ export function CitySalaryHeatmap({
   const topCity = rows[0]?.city ?? "核心城市";
   return (
     <ChartCard
-      title="城市 x 薪资档位分布"
-      subtitle="不同城市各薪资档位的岗位数量"
-      insight={`${topCity}在主要薪资档位中的颜色更深，说明岗位需求和薪资样本都更集中。`}
+      title="城市 x 实习薪资档位分布"
+      subtitle="不同城市各实习薪资档位的实习岗位数量"
+      insight={`${topCity}在主要实习薪资档位中的颜色更深，说明实习岗位需求和薪资样本都更集中。`}
     >
       <Heatmap rows={rows} columns={columns} colorScheme="temperature" showPercentageLabels showThermometerLegend />
     </ChartCard>
@@ -175,12 +175,12 @@ export function CityJobHeatmap({
   rows: HeatmapRow[];
   columns: string[];
 }) {
-  const topType = columns[0] ?? "核心岗位";
+  const topType = columns[0] ?? "核心实习岗位";
   return (
     <ChartCard
-      title="城市 x 岗位类型分布"
-      subtitle="不同城市各岗位类型需求强度"
-      insight={`${topType}是数据库中需求最突出的岗位类型，头部城市的岗位结构也更丰富。`}
+      title="城市 x 实习岗位类型分布"
+      subtitle="不同城市各实习岗位类型需求强度"
+      insight={`${topType}是数据库中需求最突出的实习岗位类型，头部城市的实习岗位结构也更丰富。`}
     >
       <Heatmap rows={rows} columns={columns} colorScheme="blueYellow" showPercentageLabels showThermometerLegend />
     </ChartCard>
@@ -211,16 +211,16 @@ export function CompetitivenessScatterChart({ data }: { data: CompetitivenessPoi
         <p className="text-muted-foreground">经验要求：{item.experience || "不限"}</p>
         <p className="text-muted-foreground">技能数量：{item.skillCount ?? 0}</p>
         <p className="text-muted-foreground">竞争力评分：{item.score.toFixed(3)}</p>
-        <p className="text-muted-foreground">薪资水平：{item.salary}k</p>
+        <p className="text-muted-foreground">实习薪资水平：{item.salary}k</p>
       </div>
     );
   };
 
   return (
     <ChartCard
-      title="岗位竞争力评分与薪资四象限分析"
-      subtitle="以平均竞争力评分和平均薪资为分割线，识别不同类型岗位的薪资回报与门槛特征。"
-      insight="四象限图将岗位按照竞争力评分和薪资水平划分为四类。右上区域代表门槛较高且薪资较高的高价值岗位；左上区域代表门槛相对较低但薪资较高的机会型岗位；右下区域说明部分岗位虽然要求较高，但薪资回报相对一般；左下区域则更多对应基础型岗位。"
+      title="实习岗位竞争力评分与薪资四象限分析"
+      subtitle="以平均竞争力评分和平均实习薪资为分割线，识别不同类型实习岗位的薪资回报与门槛特征。"
+      insight="四象限图将实习岗位按照竞争力评分和实习薪资水平划分为四类。右上区域代表门槛较高且薪资较高的高价值实习岗位；左上区域代表门槛相对较低但薪资较高的机会型实习岗位；右下区域说明部分实习岗位虽然要求较高，但薪资回报相对一般；左下区域则更多对应基础型实习岗位。"
     >
       {validData.length < 4 ? (
         <div className="flex h-[340px] items-center justify-center rounded-lg border border-dashed border-border text-sm text-muted-foreground">
@@ -229,10 +229,10 @@ export function CompetitivenessScatterChart({ data }: { data: CompetitivenessPoi
       ) : (
         <ResponsiveContainer width="100%" height={400}>
         <ScatterChart margin={{ top: 58, right: 34, bottom: 42, left: 8 }}>
-          <ReferenceArea x1={avgScore} x2={scoreMax} y1={avgSalary} y2={salaryMax} fill="#22c55e" fillOpacity={0.08} label={{ value: "高价值岗位", position: "insideTopRight", fill: "var(--foreground)", fontSize: 11 }} />
-          <ReferenceArea x1={0} x2={avgScore} y1={avgSalary} y2={salaryMax} fill="#f59e0b" fillOpacity={0.08} label={{ value: "机会型岗位", position: "insideTopLeft", fill: "var(--foreground)", fontSize: 11 }} />
+          <ReferenceArea x1={avgScore} x2={scoreMax} y1={avgSalary} y2={salaryMax} fill="#22c55e" fillOpacity={0.08} label={{ value: "高价值实习", position: "insideTopRight", fill: "var(--foreground)", fontSize: 11 }} />
+          <ReferenceArea x1={0} x2={avgScore} y1={avgSalary} y2={salaryMax} fill="#f59e0b" fillOpacity={0.08} label={{ value: "机会型实习", position: "insideTopLeft", fill: "var(--foreground)", fontSize: 11 }} />
           <ReferenceArea x1={avgScore} x2={scoreMax} y1={0} y2={avgSalary} fill="#6366f1" fillOpacity={0.07} label={{ value: "高门槛低回报", position: "insideBottomRight", fill: "var(--muted-foreground)", fontSize: 11 }} />
-          <ReferenceArea x1={0} x2={avgScore} y1={0} y2={avgSalary} fill="#94a3b8" fillOpacity={0.07} label={{ value: "基础型岗位", position: "insideBottomLeft", fill: "var(--muted-foreground)", fontSize: 11 }} />
+          <ReferenceArea x1={0} x2={avgScore} y1={0} y2={avgSalary} fill="#94a3b8" fillOpacity={0.07} label={{ value: "基础型实习", position: "insideBottomLeft", fill: "var(--muted-foreground)", fontSize: 11 }} />
           <XAxis
             type="number"
             dataKey="score"
@@ -244,14 +244,14 @@ export function CompetitivenessScatterChart({ data }: { data: CompetitivenessPoi
           <YAxis
             type="number"
             dataKey="salary"
-            name="薪资(k)"
+            name="实习薪资(k)"
             domain={[0, salaryMax]}
             tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
-            label={{ value: "薪资(k)", angle: -90, position: "insideLeft", fill: "var(--muted-foreground)", fontSize: 12 }}
+            label={{ value: "实习薪资(k)", angle: -90, position: "insideLeft", fill: "var(--muted-foreground)", fontSize: 12 }}
           />
           <ZAxis type="number" dataKey="skillCount" range={[36, 130]} domain={[0, "dataMax"]} />
           <ReferenceLine x={avgScore} stroke="var(--muted-foreground)" strokeDasharray="4 4" label={{ value: "平均竞争力", position: "top", fill: "var(--muted-foreground)", fontSize: 11 }} />
-          <ReferenceLine y={avgSalary} stroke="#f59e0b" strokeDasharray="4 4" label={{ value: "平均薪资", position: "right", fill: "var(--foreground)", fontSize: 11 }} />
+          <ReferenceLine y={avgSalary} stroke="#f59e0b" strokeDasharray="4 4" label={{ value: "平均实习薪资", position: "right", fill: "var(--foreground)", fontSize: 11 }} />
           <Tooltip content={tooltipContent} />
           <Legend verticalAlign="top" align="center" iconType="circle" wrapperStyle={{ top: 8, fontSize: 12 }} />
           {Object.keys(levelColors).map((level) => (
@@ -291,8 +291,8 @@ export function CorrelationHeatmap({
   return (
     <ChartCard
       title="数值变量相关性热力图"
-      subtitle="薪资、学历、技能数、竞争力和城市需求之间的相关性"
-      insight="相关性矩阵基于数据库真实岗位字段计算，颜色越深表示变量之间的线性关系越强。"
+      subtitle="实习薪资、学历、技能数、竞争力和城市需求之间的相关性"
+      insight="相关性矩阵基于数据库真实实习岗位字段计算，颜色越深表示变量之间的线性关系越强。"
     >
       <div className="overflow-x-auto">
         <div className="flex min-w-max items-center gap-5">
@@ -355,7 +355,7 @@ export function CityRadarChart({
   return (
     <ChartCard
       title="Top 城市综合画像雷达图"
-      subtitle="从岗位数量、平均薪资、岗位丰富度、学历门槛和技能数量五个维度比较城市"
+      subtitle="从实习岗位数量、平均实习薪资、实习岗位丰富度、学历门槛和技能数量五个维度比较城市"
       insight="雷达图各维度均在 Top5 城市内部归一化到 0~1，数值越接近 1 表示该城市在该指标上相对越突出。"
     >
       <ResponsiveContainer width="100%" height={430}>

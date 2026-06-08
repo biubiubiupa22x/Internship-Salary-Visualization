@@ -3,9 +3,9 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "AI 人才招聘市场洞察平台",
+  title: "智岗洞察｜AI相关实习岗位数据可视化分析",
   description:
-    "从城市分布、薪资结构、学历经验、岗位类型与技能关键词出发，刻画 AI 人才市场需求特征。",
+    "人工智能相关实习岗位招聘需求、实习薪资水平与技能画像分析平台",
   generator: "v0.app",
   icons: {
     icon: [

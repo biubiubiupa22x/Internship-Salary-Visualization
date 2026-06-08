@@ -116,7 +116,7 @@ export function getJobAnalysisData(): JobAnalysisData {
     .slice(0, 10)
 
   /**
-   * 2. 岗位类型平均薪资排名
+   * 2. 实习岗位类型平均实习薪资排名
    */
   const typeSalaryMap = new Map<
     number,
@@ -176,7 +176,7 @@ export function getJobAnalysisData(): JobAnalysisData {
     .slice(0, 10)
 
   /**
-   * 3. 岗位需求量 - 薪资 - 学历门槛气泡图
+   * 3. 实习岗位需求量 - 薪资 - 学历门槛气泡图
    *
    * 原 SQL 逻辑是按 岗位类型 + 学历 分组：
    * type_name / education_name / edu_score / job_count / avg_salary
@@ -248,7 +248,7 @@ export function getJobAnalysisData(): JobAnalysisData {
   /**
    * 4. 城市岗位类型结构堆叠图
    *
-   * 取岗位数量 Top 6 城市 + 需求量 Top 6 岗位类型
+   * 取实习岗位数量 Top 6 城市 + 需求量 Top 6 实习岗位类型
    */
   const cityCountMap = new Map<number, number>()
 
