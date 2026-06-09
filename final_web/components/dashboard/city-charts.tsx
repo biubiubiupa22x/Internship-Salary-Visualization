@@ -158,7 +158,7 @@ export function CityMapPlaceholder({ data = cityData }: CityChartProps = {}) {
           key={city.name}
           className="absolute flex items-center justify-center"
           style={{ left: `${city.x}%`, top: `${city.y}%`, transform: "translate(-50%, -50%)" }}
-          title={`${city.name}：气泡越大代表实习岗位越多`}
+          title={`${city.name}：${city.jobs} 个实习岗位，平均实习薪资 ${city.salary}k`}
         >
           <div
             className="rounded-full opacity-80 shadow-sm transition-transform hover:scale-110"

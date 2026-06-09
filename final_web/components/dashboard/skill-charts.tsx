@@ -152,7 +152,7 @@ export function SkillNetworkGraph({ nodes, links }: { nodes: SkillNodeDatum[]; l
         })}
       </svg>
       <p className="mt-2 px-4 text-center text-xs text-foreground/80">
-        节点大小表示技能出现频率；连线越粗、透明度越高，表示两个技能共同出现次数越多。
+        产品与运营、后端与算法、大模型与算法等连接更突出，说明样本中的技能要求常以组合形式出现。
       </p>
     </div>
   );

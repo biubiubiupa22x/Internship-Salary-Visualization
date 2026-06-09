@@ -54,6 +54,8 @@ type FactJob = {
   position_type_id: number
   search_keyword_id?: number | null
   salary_tier_id?: number | null
+  salary_min?: number | null
+  salary_max?: number | null
   salary_mid?: number | null
   salary_valid?: number | null
   competitiveness_score?: number | null
@@ -317,6 +319,10 @@ export function getConclusionData(): ConclusionData {
   const correlationSource = validSalaryJobs
     .filter(
       (job) =>
+        job.salary_min !== null &&
+        job.salary_min !== undefined &&
+        job.salary_max !== null &&
+        job.salary_max !== undefined &&
         job.competitiveness_score !== null &&
         job.competitiveness_score !== undefined
     )
@@ -324,30 +330,35 @@ export function getConclusionData(): ConclusionData {
       const education = educationMap.get(job.education_id)
 
       return {
-        salary: toNumber(job.salary_mid),
-        education: toNumber(job.edu_score ?? education?.edu_score),
-        skills: jobSkillCountMap.get(job.job_id) ?? 0,
-        competitiveness: toNumber(job.competitiveness_score),
-        cityDemand: cityCountMap.get(job.city_id) ?? 0,
+        minSalary: toNumber(job.salary_min),
+        maxSalary: toNumber(job.salary_max),
+        avgSalary: toNumber(job.salary_mid),
+        educationScore: toNumber(job.edu_score ?? education?.edu_score),
+        competitivenessScore: toNumber(job.competitiveness_score),
+        skillCount: jobSkillCountMap.get(job.job_id) ?? 0,
       }
     })
 
-  const correlationVars = ["薪资", "学历", "技能数", "竞争力", "城市需求"]
+  const correlationVars = ["最低薪资", "最高薪资", "平均薪资", "学历分数", "竞争力评分", "技能数量"]
 
   const correlationFields = [
-    { key: "salary", label: "薪资" },
-    { key: "education", label: "学历" },
-    { key: "skills", label: "技能数" },
-    { key: "competitiveness", label: "竞争力" },
-    { key: "cityDemand", label: "城市需求" },
+    { key: "minSalary", label: "最低薪资" },
+    { key: "maxSalary", label: "最高薪资" },
+    { key: "avgSalary", label: "平均薪资" },
+    { key: "educationScore", label: "学历分数" },
+    { key: "competitivenessScore", label: "竞争力评分" },
+    { key: "skillCount", label: "技能数量" },
   ] as const
 
   const correlationData = correlationFields.map((rowField) =>
     correlationFields.map((colField) =>
-      correlation(
+      {
+        const value = correlation(
         correlationSource.map((row) => row[rowField.key]),
         correlationSource.map((row) => row[colField.key])
-      )
+        )
+        return Math.abs(value) < 0.05 ? 0 : value
+      }
     )
   )
 

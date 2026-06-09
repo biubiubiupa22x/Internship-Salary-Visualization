@@ -59,7 +59,7 @@ const positionBoxData = [
   { position: "大模型工程师", min: 18, q1: 25, median: 35, q3: 48, max: 70 },
 ];
 
-const COLORS = ["#93c5fd", "#60a5fa", "#38bdf8", "#22d3ee", "#fde68a", "#facc15"];
+const COLORS = ["#2563eb", "#06b6d4", "#10b981", "#f59e0b", "#f43f5e", "#8b5cf6"];
 
 const fallbackData: SalaryAnalysisData = {
   histogram: salaryHistogram,
@@ -123,39 +123,77 @@ export function SalaryHistogramChart({ data = fallbackData }: SalaryChartProps =
 
 export function SalaryTiersPieChart({ data = fallbackData }: SalaryChartProps = {}) {
   const salaryTierData = makeSalaryTierData(data.tiers);
+  const salaryTierTotal = salaryTierData.reduce((sum, tier) => sum + tier.value, 0);
 
   return (
-    <div className="min-h-[300px]">
+    <div className="grid min-h-[300px] items-center gap-4 md:grid-cols-[1fr_210px]">
       <div className="h-[300px] min-w-0">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
-            <Pie data={salaryTierData} cx="50%" cy="46%" innerRadius={48} outerRadius={82} dataKey="value" nameKey="name" label={({ percentage }) => `${percentage}%`} labelLine={{ stroke: "var(--muted-foreground)", strokeWidth: 1 }}>
+            <Pie
+              data={salaryTierData}
+              cx="50%"
+              cy="50%"
+              innerRadius={60}
+              outerRadius={100}
+              dataKey="value"
+              nameKey="name"
+              label={({ cx, cy, midAngle, innerRadius, outerRadius, percentage }) => {
+                const radius = Number(innerRadius) + (Number(outerRadius) - Number(innerRadius)) * 0.48;
+                const x = Number(cx) + radius * Math.cos((-midAngle * Math.PI) / 180);
+                const y = Number(cy) + radius * Math.sin((-midAngle * Math.PI) / 180);
+                return (
+                  <text x={x} y={y} textAnchor="middle" dominantBaseline="central" className="fill-white text-[11px] font-semibold">
+                    {`${percentage}%`}
+                  </text>
+                );
+              }}
+              labelLine={false}
+            >
               {salaryTierData.map((_, index) => <Cell key={index} fill={COLORS[index % COLORS.length]} />)}
             </Pie>
-            <Legend verticalAlign="bottom" height={42} iconType="circle" wrapperStyle={{ fontSize: 12 }} />
+            <text x="50%" y="46%" textAnchor="middle" className="fill-muted-foreground text-[12px] font-medium">
+              总岗位数
+            </text>
+            <text x="50%" y="56%" textAnchor="middle" className="fill-foreground text-[18px] font-bold">
+              {salaryTierTotal}
+            </text>
             <Tooltip formatter={(value: number, _name, props) => [`${value} 个实习岗位，占比 ${props.payload.percentage}%`, props.payload.name]} contentStyle={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", borderRadius: "8px" }} />
           </PieChart>
         </ResponsiveContainer>
+      </div>
+      <div className="rounded-md border border-border bg-background/70 p-3 shadow-sm">
+        <p className="mb-2 text-center text-xs font-semibold text-foreground">薪资档位</p>
+        <div className="space-y-1.5">
+          {salaryTierData.map((tier, index) => (
+            <div key={tier.name} className="flex items-center gap-2 text-[11px] leading-4 text-muted-foreground">
+              <span className="h-2.5 w-3 shrink-0 rounded-sm" style={{ backgroundColor: COLORS[index % COLORS.length] }} />
+              <span className="min-w-0 flex-1 truncate text-foreground">{tier.name}</span>
+              <span className="shrink-0">{tier.value}个</span>
+              <span className="w-12 shrink-0 text-right">({tier.percentage}%)</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
 
 function BoxPlot({ data, labelKey, color, domainMax }: { data: SalaryBoxDatum[]; labelKey: "city" | "position"; color: string; domainMax: number }) {
-  const width = 720;
-  const height = 320;
-  const margin = { top: 18, right: 28, bottom: labelKey === "position" ? 70 : 48, left: 48 };
+  const width = Math.max(900, data.length * 86);
+  const height = 360;
+  const margin = { top: 22, right: 38, bottom: labelKey === "position" ? 86 : 66, left: 52 };
   const plotWidth = width - margin.left - margin.right;
   const plotHeight = height - margin.top - margin.bottom;
   const tickStep = domainMax <= 50 ? 10 : 15;
   const ticks = Array.from({ length: Math.floor(domainMax / tickStep) + 1 }, (_, index) => index * tickStep);
   const slotWidth = plotWidth / data.length;
-  const boxWidth = Math.min(38, slotWidth * 0.56);
+  const boxWidth = Math.min(32, slotWidth * 0.48);
   const x = (index: number) => margin.left + (index + 0.5) * slotWidth;
   const y = (value: number) => margin.top + plotHeight - (value / domainMax) * plotHeight;
 
   return (
-    <div className="h-[340px]">
+    <div className="h-[380px]">
       <svg viewBox={`0 0 ${width} ${height}`} role="img" className="h-full w-full overflow-visible">
         {ticks.map((tick) => (
           <g key={tick}>

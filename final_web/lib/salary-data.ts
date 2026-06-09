@@ -145,7 +145,7 @@ export function getSalaryAnalysisData(): SalaryAnalysisData {
 
   const cityBoxes = Array.from(citySalaryMap.entries())
     .sort((a, b) => b[1].length - a[1].length)
-    .slice(0, 6)
+    .slice(0, 10)
     .map(([cityId, values]) => ({
       city: cityMap.get(cityId) ?? "未知",
       ...makeBox(values),
@@ -153,7 +153,7 @@ export function getSalaryAnalysisData(): SalaryAnalysisData {
 
   const positionBoxes = Array.from(positionSalaryMap.entries())
     .sort((a, b) => b[1].length - a[1].length)
-    .slice(0, 6)
+    .slice(0, 10)
     .map(([typeId, values]) => ({
       position: positionTypeMap.get(typeId) ?? "未知",
       ...makeBox(values),

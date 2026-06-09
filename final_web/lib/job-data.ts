@@ -18,7 +18,6 @@ export interface JobBubbleDatum {
   count: number
   salary: number
   educationScore: number
-  educationName: string
 }
 
 export interface CityJobStructureDatum {
@@ -40,6 +39,7 @@ type FactJob = {
   city_id: number
   education_id: number
   position_type_id: number
+  search_keyword_id?: number | null
   salary_mid?: number | null
   salary_valid?: number | null
 }
@@ -47,6 +47,11 @@ type FactJob = {
 type PositionType = {
   position_type_id: number
   type_name: string
+}
+
+type SearchKeyword = {
+  keyword_id: number
+  keyword: string
 }
 
 type Education = {
@@ -78,11 +83,16 @@ function educationLevel(score: number): string {
 export function getJobAnalysisData(): JobAnalysisData {
   const factJobs = readJsonData<FactJob>("fact_job.json")
   const positionTypes = readJsonData<PositionType>("dim_position_type.json")
+  const searchKeywords = readJsonData<SearchKeyword>("dim_search_keyword.json")
   const educations = readJsonData<Education>("dim_education.json")
   const cities = readJsonData<City>("dim_city.json")
 
   const positionTypeMap = new Map(
     positionTypes.map((item) => [item.position_type_id, item.type_name])
+  )
+
+  const searchKeywordMap = new Map(
+    searchKeywords.map((item) => [item.keyword_id, item.keyword])
   )
 
   const educationMap = new Map(
@@ -178,77 +188,78 @@ export function getJobAnalysisData(): JobAnalysisData {
   /**
    * 3. 实习岗位需求量 - 薪资 - 学历门槛气泡图
    *
-   * 原 SQL 逻辑是按 岗位类型 + 学历 分组：
-   * type_name / education_name / edu_score / job_count / avg_salary
+   * 为了和原始分析图保持一致，这里按搜索岗位关键词聚合：
+   * keyword / job_count / avg_salary / avg_education_score
    */
   const bubbleGroupMap = new Map<
-    string,
+    number,
     {
-      typeId: number
-      educationId: number
       count: number
       salaries: number[]
+      eduScores: number[]
     }
   >()
 
   for (const job of factJobs) {
-    if (!job.position_type_id || !job.education_id) continue
-    if (
-      toNumber(job.salary_valid) !== 1 ||
-      job.salary_mid === null ||
-      job.salary_mid === undefined
-    ) {
-      continue
-    }
+    if (!job.search_keyword_id) continue
 
-    const key = `${job.position_type_id}|||${job.education_id}`
-
-    const current = bubbleGroupMap.get(key) ?? {
-      typeId: job.position_type_id,
-      educationId: job.education_id,
+    const current = bubbleGroupMap.get(job.search_keyword_id) ?? {
       count: 0,
       salaries: [],
+      eduScores: [],
     }
 
     current.count += 1
-    current.salaries.push(toNumber(job.salary_mid))
 
-    bubbleGroupMap.set(key, current)
+    if (
+      toNumber(job.salary_valid) === 1 &&
+      job.salary_mid !== null &&
+      job.salary_mid !== undefined
+    ) {
+      current.salaries.push(toNumber(job.salary_mid))
+    }
+
+    const education = educationMap.get(job.education_id)
+    if (education) {
+      current.eduScores.push(toNumber(education.edu_score))
+    }
+
+    bubbleGroupMap.set(job.search_keyword_id, current)
   }
 
-  const bubbleAll = Array.from(bubbleGroupMap.values())
-    .map((item) => {
-      const education = educationMap.get(item.educationId)
-
-      return {
-        name: positionTypeMap.get(item.typeId) ?? "未知",
-        count: item.count,
-        salary: avg(item.salaries),
-        educationScore: toNumber(education?.edu_score),
-        educationName: education?.education_name ?? "未知",
-      }
-    })
+  const bubbleAll = Array.from(bubbleGroupMap.entries())
+    .map(([keywordId, item]) => ({
+      name: searchKeywordMap.get(keywordId) ?? "未知",
+      count: item.count,
+      salary: avg(item.salaries),
+      educationScore: avg(item.eduScores),
+    }))
     .filter((item) => item.name !== "未知")
-    .filter((item) => item.educationName !== "未知")
+    .filter((item) => item.salary > 0)
 
-  /**
-   * 为了接近原 SQL：
-   * - 优先保留样本量 >= 15 的组合
-   * - 同时避免图为空，如果不够则按数量补齐
-   */
-  const bubbleLarge = bubbleAll.filter((item) => item.count >= 15)
+  const topDemandBubble = bubbleAll
+    .slice()
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 12)
 
-  const bubble = (bubbleLarge.length >= 12 ? bubbleLarge : bubbleAll)
+  const highSalaryBubble = bubbleAll
+    .filter((item) => item.count >= 5)
+    .sort((a, b) => b.salary - a.salary)
+    .slice(0, 4)
+
+  const bubble = Array.from(
+    new Map([...topDemandBubble, ...highSalaryBubble].map((item) => [item.name, item])).values()
+  )
     .sort((a, b) => {
       if (b.count !== a.count) return b.count - a.count
       return b.salary - a.salary
     })
-    .slice(0, 36)
 
   /**
-   * 4. 城市岗位类型结构堆叠图
+   * 4. 城市 x 岗位类型结构热力图
    *
-   * 取实习岗位数量 Top 6 城市 + 需求量 Top 6 实习岗位类型
+   * 为了和原始分析图保持一致，这里使用搜索岗位关键词作为横轴。
+   * 每行按当前展示的岗位关键词重新归一化，因此百分比之和约为 100%。
    */
   const cityCountMap = new Map<number, number>()
 
@@ -259,10 +270,26 @@ export function getJobAnalysisData(): JobAnalysisData {
 
   const topCityIds = Array.from(cityCountMap.entries())
     .sort((a, b) => b[1] - a[1])
-    .slice(0, 6)
+    .slice(0, 12)
     .map(([cityId]) => cityId)
 
-  const stackTypes = demand.slice(0, 6).map((item) => item.type)
+  const keywordCountMap = new Map<number, number>()
+  for (const job of factJobs) {
+    if (!job.search_keyword_id) continue
+    keywordCountMap.set(
+      job.search_keyword_id,
+      (keywordCountMap.get(job.search_keyword_id) ?? 0) + 1
+    )
+  }
+
+  const topKeywordIds = Array.from(keywordCountMap.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 12)
+    .map(([keywordId]) => keywordId)
+
+  const stackTypes = topKeywordIds
+    .map((keywordId) => searchKeywordMap.get(keywordId) ?? "未知")
+    .filter((name) => name !== "未知")
 
   const cityStructure = topCityIds.map((cityId) => {
     const item: CityJobStructureDatum = {
@@ -277,7 +304,9 @@ export function getJobAnalysisData(): JobAnalysisData {
     for (const job of factJobs) {
       if (job.city_id !== cityId) continue
 
-      const typeName = positionTypeMap.get(job.position_type_id)
+      const typeName = job.search_keyword_id
+        ? searchKeywordMap.get(job.search_keyword_id)
+        : undefined
       if (!typeName || !stackTypes.includes(typeName)) continue
 
       item[typeName] = toNumber(item[typeName]) + 1
