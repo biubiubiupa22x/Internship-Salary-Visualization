@@ -24,7 +24,7 @@ export default function JobPage() {
           <ChartCard title="实习岗位类型平均实习薪资排名" subtitle="比较不同实习岗位类型的薪资回报差异" insight="算法、大模型、Java 和后端等技术类岗位平均实习薪资较高，说明技术门槛更强的方向通常有更高薪资回报；产品、运营类岗位需求较大，但薪资优势不如技术岗明显。"><JobSalaryChart data={jobData.salary} /></ChartCard>
         </div>
         <div className="mt-6"><ChartCard title="实习岗位需求量-薪资-学历门槛气泡图" subtitle="综合比较岗位需求规模、薪资水平和学历门槛" insight="产品类岗位需求量最大，但薪资并非最高；算法、后端、Java 和大模型等技术类方向薪资更突出，说明实习岗位需求规模和薪资水平并不完全一致。"><JobBubbleChart data={jobData.bubble} /></ChartCard></div>
-        <div className="mt-6"><ChartCard title="城市与岗位类型结构热力图" subtitle="比较主要城市内部的实习岗位类型占比" insight="上海、北京等头部城市产品经理和后端开发占比较高，深圳、广州、成都等城市产品运营占比较突出，说明不同城市的 AI 相关实习岗位结构存在明显差异。"><CityJobStackedChart data={jobData.cityStructure} stackTypes={jobData.stackTypes} /></ChartCard></div>
+        <div className="mt-6"><ChartCard title="城市岗位类型结构100%堆叠图" subtitle="比较主要城市内部的实习岗位类型占比" insight="上海、北京等头部城市产品经理和后端开发占比较高，深圳、广州、成都等城市产品运营占比较突出，说明不同城市的 AI 相关实习岗位结构存在明显差异。"><CityJobStackedChart data={jobData.cityStructure} stackTypes={jobData.stackTypes} /></ChartCard></div>
         <div className="mt-8"><PageInsights insights={insights} /></div>
       </main>
     </div>

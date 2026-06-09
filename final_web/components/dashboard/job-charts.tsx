@@ -18,6 +18,20 @@ import {
 import type { CityJobStructureDatum, JobBubbleDatum, JobDemandDatum, JobSalaryDatum } from "@/lib/job-data";
 
 const COLORS = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)", "var(--chart-5)"];
+const STACK_COLORS = [
+  "#2563eb",
+  "#7c3aed",
+  "#06b6d4",
+  "#22c55e",
+  "#f59e0b",
+  "#ec4899",
+  "#6366f1",
+  "#14b8a6",
+  "#a855f7",
+  "#f97316",
+  "#84cc16",
+  "#0ea5e9",
+];
 const EDUCATION_COLOR_STOPS = [
   { value: 0, color: "#6d28d9" },
   { value: 0.35, color: "#e879f9" },
@@ -172,77 +186,79 @@ export function JobBubbleChart({ data }: { data: JobBubbleDatum[] }) {
 }
 
 export function CityJobStackedChart({ data, stackTypes }: { data: CityJobStructureDatum[]; stackTypes: string[] }) {
-  const percentData = data.map((city) => ({
-    city: city.city,
-    total: city.total,
-    values: stackTypes.map((type) =>
-      city.total ? Number((Number(city[type] ?? 0) / Number(city.total) * 100).toFixed(0)) : 0
-    ),
-  }));
-  const maxValue = Math.max(...percentData.flatMap((row) => row.values), 1);
-  const cellStyle = (value: number) => {
-    const intensity = value / maxValue;
-    const hue = 58 + intensity * 162;
-    const lightness = 94 - intensity * 48;
-    return {
-      backgroundColor: `hsl(${hue}, 86%, ${lightness}%)`,
-      color: intensity > 0.55 ? "#ffffff" : "#172033",
+  const percentData = data.map((city) => {
+    const row: Record<string, string | number> = {
+      city: city.city,
+      total: city.total,
     };
-  };
+
+    for (const type of stackTypes) {
+      row[type] = city.total
+        ? Number(((Number(city[type] ?? 0) / Number(city.total)) * 100).toFixed(1))
+        : 0;
+    }
+
+    return row;
+  });
 
   return (
     <div>
-      <div className="flex items-start gap-4">
-        <div className="min-w-0 flex-1">
-          <table className="w-full table-fixed border-collapse text-xs">
-            <thead>
-              <tr>
-                <th className="w-14 pb-2 text-left font-medium text-muted-foreground">城市</th>
-                {stackTypes.map((type) => (
-                  <th key={type} className="h-24 align-bottom">
-                    <span className="inline-block origin-bottom-left whitespace-nowrap text-[11px] font-medium text-foreground" style={{ transform: "rotate(-40deg)" }}>
-                      {type}
-                    </span>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {percentData.map((row) => (
-                <tr key={row.city}>
-                  <td className="h-9 pr-2 text-right text-sm font-medium text-foreground">{row.city}</td>
-                  {row.values.map((value, index) => (
-                    <td key={`${row.city}-${stackTypes[index]}`} className="border border-background p-0.5">
-                      <div
-                        title={`${row.city} - ${stackTypes[index]}：${value}%`}
-                        className="flex h-8 items-center justify-center rounded-sm text-[11px] font-semibold"
-                        style={cellStyle(value)}
-                      >
-                        {value > 0 ? `${value}%` : ""}
-                      </div>
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div className="mt-12 hidden min-w-14 flex-col items-center gap-2 md:flex">
-          <div
-            className="h-72 w-5 rounded-sm border border-border"
-            style={{ background: "linear-gradient(to top, #fffde7 0%, #e6f5a8 25%, #81d4c7 50%, #2b8cbe 75%, #081d58 100%)" }}
-          />
-          <div className="flex h-72 -translate-y-[18.5rem] translate-x-8 flex-col justify-between text-[10px] text-muted-foreground">
-            <span>{Math.ceil(maxValue / 5) * 5}</span>
-            <span>{Math.ceil(maxValue * 0.75)}</span>
-            <span>{Math.ceil(maxValue * 0.5)}</span>
-            <span>{Math.ceil(maxValue * 0.25)}</span>
-            <span>0</span>
+      <div className="h-[420px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={percentData} margin={{ top: 12, right: 24, bottom: 62, left: 8 }}>
+            <CartesianGrid stroke="var(--border)" strokeDasharray="3 4" opacity={0.7} vertical={false} />
+            <XAxis
+              dataKey="city"
+              interval={0}
+              angle={-35}
+              textAnchor="end"
+              height={72}
+              tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
+              axisLine={{ stroke: "var(--border)" }}
+              tickLine={false}
+            />
+            <YAxis
+              domain={[0, 100]}
+              tickFormatter={(value) => `${value}%`}
+              tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
+              axisLine={false}
+              tickLine={false}
+            />
+            <Tooltip
+              formatter={(value: number, name: string) => [`${Number(value).toFixed(1)}%`, name]}
+              labelFormatter={(label) => `${label}岗位类型结构`}
+              contentStyle={{
+                backgroundColor: "var(--card)",
+                border: "1px solid var(--border)",
+                borderRadius: "8px",
+                fontSize: "12px",
+              }}
+            />
+            {stackTypes.map((type, index) => (
+              <Bar
+                key={type}
+                dataKey={type}
+                stackId="jobType"
+                fill={STACK_COLORS[index % STACK_COLORS.length]}
+                isAnimationActive={false}
+              />
+            ))}
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="mt-3 flex flex-wrap justify-center gap-x-4 gap-y-2">
+        {stackTypes.map((type, index) => (
+          <div key={type} className="flex items-center gap-1.5 text-xs text-muted-foreground">
+            <span
+              className="h-2.5 w-2.5 rounded-sm"
+              style={{ backgroundColor: STACK_COLORS[index % STACK_COLORS.length] }}
+            />
+            {type}
           </div>
-        </div>
+        ))}
       </div>
       <p className="mt-3 text-center text-xs text-muted-foreground">
-        说明：每一行表示一个城市内部的岗位类型占比，行内百分比按当前展示的岗位类型重新归一化。
+        说明：每根柱子代表一个城市，柱内各色块按当前展示的岗位类型占比归一化为 100%。
       </p>
     </div>
   );
