@@ -78,17 +78,19 @@ export function TopNav() {
 
         <div className="flex items-center gap-3">
           <Button
+            asChild
             variant="ghost"
             size="sm"
             className="hidden text-muted-foreground sm:inline-flex"
           >
-            文档
+            <Link href="/docs">文档</Link>
           </Button>
           <Button
+            asChild
             size="sm"
             className="bg-gradient-to-r from-purple-600 to-violet-600 text-white hover:from-purple-700 hover:to-violet-700"
           >
-            开始分析
+            <Link href="/assistant">开始分析</Link>
           </Button>
         </div>
       </div>

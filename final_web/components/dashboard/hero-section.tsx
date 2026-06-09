@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -35,18 +36,22 @@ export function HeroSection({ totalJobs }: { totalJobs: number }) {
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <Button
+              asChild
               size="lg"
               className="bg-gradient-to-r from-purple-600 to-violet-600 text-white hover:from-purple-700 hover:to-violet-700"
             >
-              开始探索
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <Link href="/assistant">
+                开始探索
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
             </Button>
             <Button
+              asChild
               size="lg"
               variant="outline"
               className="border-purple-300 text-foreground hover:bg-purple-50"
             >
-              查看方法说明
+              <Link href="/docs">查看方法说明</Link>
             </Button>
           </div>
 
